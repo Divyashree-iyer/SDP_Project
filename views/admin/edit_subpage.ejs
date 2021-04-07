@@ -1,0 +1,108 @@
+<%- include('../_layouts/admin_header'); %>
+	
+	<h2 class="page-title" style="font-family: Times New Roman;">Edit a Subpage</h2>
+	<a href="/admin/sub-pages" class="btn btn-primary">Back 2 subpages</a>
+	<br><br>
+	
+	<form method="post" enctype="multipart/form-data" action="/admin/sub-pages/edit-subpage/<%= slug %>">
+	
+		<div class="form-group">
+			<label class="form-label" style="font-family: Times New Roman;">Parent Page</label>
+			<select value="<%= page%>" name="page" class="form-control" style="font-family: Times New Roman;">	
+				<% pages.forEach(function(p){ %>
+				<% if(p.slug==page){%>
+				<option value="<%= p.slug %>" selected style="font-family: Times New Roman;"><%= p.title %></option>
+				<% }else{ %>
+				<option value="<%= p.slug %>" style="font-family: Times New Roman;"><%= p.title %></option>
+				<% }}); %>
+			</select>
+		</div>
+		<br>
+		<div class="form-group">
+			<label class="form-label" style="font-family: Times New Roman;">Title</label>
+			<input type="text"  class="form-control" name="title" value="<%= title%>" placeholder="Title">
+			
+		</div>
+	
+		<div class="form-group">
+			<label class="form-label" style="font-family: Times New Roman;">Slug</label>
+			<input type="text" class="form-control" name="slug" value="<%= slug%>" placeholder="Slug">
+			
+		</div>
+	
+		<div class="form-group">
+			<label class="form-label" style="font-family: Times New Roman;">Content</label>
+			<textarea id="ta" name="content" class="form-control" col="30" row="10"><%= content%></textarea>
+			
+		</div>
+		<br>
+		<div class="form-group">
+			<figure>
+				<figcaption style="font-family: Times New Roman;">Current Image</figcaption>
+				<figcaption style="font-family: Times New Roman;">Image Name : <%=img%></figcaption>
+				<img width="250px" style="margin:10px;" src="<%=imgSrc%>" id="imgPreview" alt="image">
+			</figure>
+			<div>
+				<label class="form-label" style="font-family: Times New Roman;">Change Image</label>
+			</div>
+			<div>
+				<input type="file" id="img" name="img" class="form-control1"/>
+			</div>
+			<div>
+				<img style="margin:20px;" src="#" id="imgPreview" alt="image">
+			</div>
+		</div>
+		<br>
+		<div class="form-group">
+			<label class="form-label" style="font-family: Times New Roman;">Table</label>
+			<table class="table table-bordered table-hover" id="dynamic_field">
+			<tr><td>
+			<input type="text" value="<%= table_name%>" name="table_name"  style="font-family: Times New Roman;" placeholder="Enter table Name" class="form-control name_list" />
+			</td></tr>	
+			<tr>
+			<td><button id="add" type="button" class="btn btn-primary">Add field</button></td>
+			</tr>
+			
+			
+			<% for(var i=0;i<type.length;i++){ %>
+			<tr>
+			<td><input type="text" style="font-family: Times New Roman;" value="<%=name[i]%>" name="name" class="form-control name_list" disabled/></td>
+			<td>
+			<select value="<%= type[i]%>" name="type" class="form-control"  disabled style="font-family: Times New Roman;">	
+				<% if(type[i]==="Text"){%>
+				<option  value="Text" selected>Text</option>				
+				<% }else if(type[i]==="Number"){ %>
+				<option  value="Number" selected>Number</option>
+				<% }else if(type[i]==="Date"){ %>
+				<option value="Date" selected>Date</option>
+				<% }else if(type[i]==="Time"){ %>
+				<option value="Time" selected>Time</option>
+				<% }else if(type[i]==="datetime-local"){ %>
+				<option value="datetime-local" selected>Date & Time</option>
+				<% }else if(type[i]==="File"){ %>
+				<option value="File" selected>File</option>
+				<% } %>
+			</select>				
+			</td>
+			<td>
+			<% var j=i+1 %>
+			<% if(pkey===name[i]) { %>			
+			<input type="radio" id="oldid" name="pkey" value="'+j+'" id="pkey'+j+'" class="form-check-input" checked disabled/>
+			<% } else { %>
+			<input type="radio" name="pkey" value="'+j+'" id="pkey'+j+'" class="form-check-input" disabled />
+			<% } %>
+			<label class="form-check-label" style="font-family: Times New Roman;">Primary Key</label>
+			</td>
+			<td>
+			<button type="button" name="remove" id="'+j+'" class="btn btn-danger btn_remove" disabled>X</button>
+			</td>
+			</tr>
+			<% } %>
+			</table>
+		</div>
+		<input type="hidden" name="id" value="<%= id %>">
+		<button type="submit" id="edit_submit" class="btn btn-primary">Submit</button>
+	</form>
+<%- include('../_layouts/admin_footer') %>
+
+

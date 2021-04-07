@@ -1,0 +1,85 @@
+<%- include('../_layouts/admin_header'); %>
+<style>
+	.form-label {
+		font-size: calc(1.325rem + .9vw);
+	}
+</style>
+	
+	<h1 class="page-title pb-1">Add Subpages</h1>
+	<a href="/admin/sub-pages" class="btn btn-primary" style="font-size: 20px; font-family: Times New Roman;">Back to subpages</a>
+	<br><br>
+	<form method="post" enctype="multipart/form-data" action="/admin/sub-pages/add-subpage">
+		
+		<div class="form-group">
+			<label class="form-label" ><h2>Parent Page</h2></label>
+			<select name="page" class="form-control" >
+				<% pages.forEach(function(page){ %>
+				<option value="<%= page.slug %>" ><%= page.title %></option>
+				<% }); %>
+			</select>
+		</div>
+		<br>
+		<div class="form-group">
+			<label class="form-label" >Title</label>
+			<input type="text" id="title" class="form-control" name="title" value="<%= title%>" placeholder="Title" >
+			
+		</div>
+		<br>
+		<div class="form-group">
+			<label class="form-label">Slug</label>
+			<input type="text" id="slug" class="form-control" name="slug" value="<%= slug%>" placeholder="Slug" >
+			
+		</div>
+		<br>
+		<div class="form-group">
+			<label class="form-label">Content</label>
+			<textarea id="ta" name="content" class="form-control" col="30" row="10" ><%= content%></textarea>
+			
+		</div>
+		<br>
+		<div class="form-group">
+			<div>
+				<label class="form-label" >Image</label>
+			</div>
+			<div>
+				<input type="file" id="img" name="img" class="form-control1" />
+			</div>
+			<div>
+				<img style="margin:20px;" src="#" id="imgPreview" alt="Image">
+			</div>
+		</div>
+		<br>
+		<div class="form-group">
+			<button id="add_table" type="button" class="btn btn-primary">Add table</button>
+			<input type="hidden" name="fieldNum" id="fieldNum" >
+			<table class="table table-bordered table-hover" id="dynamic_field">
+			<tr>
+			<td>
+			<input type="text"  id="table" value="<%= table_name%>" name="table_name" placeholder="Enter table Name" class="form-control name_list" disabled/>
+			</td>
+			</tr>
+			</table>
+		</div>
+		
+		<br>
+		<button type="submit" class="btn btn-primary">Submit</button>
+		
+	</form>
+	<script>
+		function readURL(input){
+			if(input.files && input.files[0]){
+				var reader=new FileReader();
+				reader.onload=function(e){
+					$("#imgPreview").attr('src',e.target.result).width(100).height(100);
+					
+				}
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$("#img").change(function(){
+		
+			readURL(this);
+		});
+	</script>
+	
+<%- include('../_layouts/admin_footer') %>

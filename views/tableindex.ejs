@@ -1,0 +1,59 @@
+<%- include('_layouts/header'); %>
+<style>
+	 .container {
+				padding: 16px 16px;
+			}
+	.center {
+	  display: block;
+	  margin-left: auto;
+	  margin-right: auto;
+	  width: 70%;
+	}
+	@media screen and (min-width: 400px) and (max-width: 900px) {
+  		.center {
+			  width: 100%;
+		  }
+	}
+</style>
+	<% var imgExtensions =/(\.jpg|\.jpeg|\.png|\.gif|\.jfif)$/i; %>
+	<% var videoExtensions =/(\.mp4|\.webm|\.ogg)$/i; %>
+	<% var audioExtensions =/(\.mp3|\.wma|\.midi)$/i; %>
+	<% visuals.forEach(function(v){ %>
+		<% if (imgExtensions.exec(v)) {%>
+			<img src='/files/<%=tableid%>/<%=docname%>/<%=v%>' alt="Image" class="center"/>
+		<% } else if(videoExtensions.exec(v)){%>
+			<video width="320" height="240" controls>
+			  <source src='/files/<%=tableid%>/<%=docname%>/<%=v%>' type="video/mp4">
+			  Your browser does not support the video tag.
+			</video>
+		<% } else if(audioExtensions.exec(v)){ %>
+			<audio controls>
+			  <source src='/files/<%=tableid%>/<%=docname%>/<%=v%>' type="audio/mp3">
+			  Your browser does not support the audio tag.
+			</audio>
+		<% }%>
+		<br>
+	<% }); %>
+	<br><br>
+	<ul style="list-style-type: none;">
+	<% var textExtensions =/(\.pdf|\.docx|\.ejs|\.html|\.txt)$/i; %>
+	<% for(var i=0;i<values.length;i++) {%>
+		<% if(values[i].value!=title){ %>
+		<li>
+		<div class="card bg-light text-black" style="margin-bottom:5px;">
+		<div class="card-body">
+		<h5 class="card-title"><strong style="text-transform: capitalize;"><%=values[i].name%></strong></h5>
+		<%if(textExtensions.exec(values[i].value)) { %>
+			<a href="/files/<%=tableid%>/<%=docname%>/<%=values[i].value%>" target="_blank"><%=values[i].value%></a>
+		<% } else { %>
+			<p class="card-text"><%=values[i].value%></p>
+		<% } %>
+		</div>
+		</div>
+		</li>
+		<% } %>
+	<% }%>
+	</ul>
+	<br><br>
+	
+<%- include('_layouts/footer') %>

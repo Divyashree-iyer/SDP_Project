@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>
+    <%=title%>
+  </title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+    integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+    integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+    crossorigin="anonymous"></script>
+  <script src="/js/main.js"></script>
+  <link rel="apple-touch-icon" sizes="76x76" href="/favicon_package_v0.16/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon_package_v0.16/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon_package_v0.16/favicon-16x16.png">
+  <link rel="manifest" href="/favicon_package_v0.16/site.webmanifest">
+  <link rel="mask-icon" href="/favicon_package_v0.16/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <script src="https://kit.fontawesome.com/44d051c2a4.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'Times New Roman', Times, serif;
+    }
+
+    .form-control {
+      background: white;
+      color: black;
+      padding: 6px 15px 6px 35px;
+      border-radius: 20px;
+      box-shadow: 1px 1px 1px #0055bd inset;
+      transition: 500ms all ease;
+      outline: 0;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+
+    /* Trick: */
+    body {
+      position: relative;
+    }
+
+    body::after {
+      content: '';
+      display: block;
+      height: 0px;
+      /* Set same as footer's height */
+    }
+
+    footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 0px;
+    }
+  </style>
+
+</head>
+
+<body style=" background-color: #e6e6e6;">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark"
+    style="font-family: Times New Roman; font-size: 20px; height: 70px;">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExampleDefault"
+        aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0 dropdown">
+          <% pages.forEach(function(page){ %>
+            <% if(page.slug=="home" ){ %>
+              <% } else { %>
+                <li><a class="nav-link" href="/<%= page.slug %>">
+                    <%= page.title %>
+                  </a></li>
+                <% } %>
+                  <% }); %>
+        </ul>
+        <% if(user){ %>
+          <a class="navbar-brand" href="/admin/pages" style="color: #e6e6e6;">Admin Area</a>
+
+          <a class="nav-link" href="/user/logout" style="color: cadetblue;">Logout</a>
+          <%}else {%>
+            <a class="nav-link" href="/user/login" style="color: cadetblue;">Log in</a>
+            <% } %>
+
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <%- messages('messages', locals) %>

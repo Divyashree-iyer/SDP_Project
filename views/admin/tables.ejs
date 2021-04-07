@@ -1,0 +1,31 @@
+<%- include('../_layouts/admin_header'); %>
+	
+	<h1 class="page-title" style="font-family: Times New Roman;">Table</h1>
+	
+	
+	<table  class="table table-dark table-hover" style="font-size: 20px; font-family: Times New Roman;">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Add Document</th>
+				<th>Created At</th>
+				<th>Updated At</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% tables.forEach(function(table){ %>
+			<tr>
+				<td><a href="/admin/tables/view/<%= table.id %>" style="color: powderblue;"><%= table.name %></a></td>
+				<td><a href="/admin/tables/add-doc/<%= table.id %>" style="color: powderblue;">Add</a></td>
+				
+				<td><%=table.createdAt.getDate()+"-"+table.createdAt.getMonth()+"-"+table.createdAt.getFullYear()+"  "+table.createdAt.getHours()+":"+table.createdAt.getMinutes()+":"+table.createdAt.getSeconds()%></td>
+				<td><%=table.updatedAt.getDate()+"-"+table.updatedAt.getMonth()+"-"+table.updatedAt.getFullYear()+"  "+table.updatedAt.getHours()+":"+table.updatedAt.getMinutes()+":"+table.updatedAt.getSeconds()%></td>
+				<td><a class="confirmDeletion" href="/admin/tables/delete/<%= table.id %>"  style="color: powderblue;" >Delete</a></td>
+			</tr>
+			<% }); %>
+		</tbody>
+	</table>
+	
+	
+<%- include('../_layouts/admin_footer') %>

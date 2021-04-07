@@ -1,0 +1,29 @@
+<%- include('../_layouts/admin_header'); %>
+	<h1 class="page-title pb-1" style="font-family: Times New Roman;">Add Page</h1>
+	<a href="/admin/pages" class="btn btn-primary" style="font-size: 20px; font-family: Times New Roman;">Back to pages</a>
+	<br><br>
+	
+	<form method="post" action="/admin/pages/add-page">
+		
+		<div class="form-group">
+			<label class="form-label"><h2>Title</h2></label>
+			<input type="text"  class="form-control" name="title" value="<%= title%>" placeholder="Title">
+			
+		</div>
+		<br>
+		<div class="form-group">
+			<label class="form-label"><h3>Slug</h3></label>
+			<input type="text" id="slug" class="form-control textbox" name="slug" value="<%= slug%>" placeholder="Slug">
+			
+		</div>
+		<br>
+		<div class="form-group">
+			<label class="form-label"><h3>Content</h3></label>
+			<textarea id="ta" name="content" class="form-control" col="20" row="5"><%= content%></textarea>
+			
+		</div>
+		<br>
+		
+		<button type="submit" class="btn btn-primary" style="font-size: 20px; font-family: Times New Roman;">Submit</button>
+	</form>
+<%- include('../_layouts/admin_footer') %>

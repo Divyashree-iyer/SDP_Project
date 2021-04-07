@@ -1,0 +1,34 @@
+<%- include('../_layouts/admin_header'); %>
+	
+	<h1 class="page-title" style="font-family: Times New Roman;">Subpages</h1>
+	<a href="/admin/sub-pages/add-subpage" class="btn btn-primary" style="font-size: 20px; font-family: Times New Roman;">Add Subpage</a>
+	<br><br>
+	
+	<table  class="table table-dark table-hover" style="font-size: 20px; font-family: Times New Roman;">
+		<thead>
+			<tr class="home">
+				<th>Subpage</th>
+				<th>Page</th>
+				<th>Created At</th>
+				<th>Updated At</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% subpages.forEach(function(subpage){ %>
+			<tr>
+				<td><%= subpage.title %></td>
+				<td><%= subpage.page %></td>
+				<td><%=subpage.createdAt.getDate()+"-"+subpage.createdAt.getMonth()+"-"+subpage.createdAt.getFullYear()+"  "+subpage.createdAt.getHours()+":"+subpage.createdAt.getMinutes()+":"+subpage.createdAt.getSeconds()%></td>
+				<td><%=subpage.updatedAt.getDate()+"-"+subpage.updatedAt.getMonth()+"-"+subpage.updatedAt.getFullYear()+"  "+subpage.updatedAt.getHours()+":"+subpage.updatedAt.getMinutes()+":"+subpage.updatedAt.getSeconds()%></td>
+				<td><a href="/admin/sub-pages/edit-subpage/<%= subpage.slug %>"  style="color: powderblue;" >Edit</a></td>
+				<td><a class="confirmDeletion" href="/admin/sub-pages/delete-subpage/<%= subpage._id %>"  style="color: powderblue;" >Delete</a></td>
+			</tr>
+			<% }); %>
+		</tbody>
+	</table>
+	
+	
+	
+<%- include('../_layouts/admin_footer') %>

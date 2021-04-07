@@ -1,0 +1,46 @@
+<%- include('../_layouts/admin_header'); %>
+	
+	<h2 class="page-title"><%=title%></h2>
+	<h5><%=page%> / <%=subpage%> / <%=tableName%> / <%=doc_id%></h5>
+	
+	<br>
+	
+	<a href="/admin/tables/view/<%=tableid%>" class="btn btn-primary">Back to View Document</a>
+	<br><br>
+	
+	
+	<form method="post" enctype="multipart/form-data" action="/admin/tables/edit-doc/<%= tableid %>/<%=doc_id%>">
+	
+		<table class="form-group">
+		<tbody>
+
+			<% for(var i=0;i<fieldNames.length;i++){%>
+			<tr>
+			<% if(fieldNames[i]!="_id" && fieldNames[i]!="__v") {%>
+				<div>
+					<label class="form-label"><%=fieldNames[i]%></label>
+				</div>
+				<% if(fieldTypes[i]==="File"){ %>
+					<div>
+						<input type="<%=fieldTypes[i]%>" class="form-control1" name="file" value="<%=docs[i]%>" />
+					</div>
+					<div style="margin:10px;">
+						<label class="form-label">Current file (downloadable link): </label>
+						<a href="/files/<%=tableid%>/<%=doc_id%>/<%=docs[i]%>" target="_blank"><%=docs[i]%></a>
+					</div>
+				<% } else { %>
+				<input type="<%=fieldTypes[i]%>" class="form-control" name="value" value="<%=docs[i]%>" />
+				<% } %>
+			<%}%>
+			</tr>
+			<% } %>
+		</tbody>
+		</table>
+		
+		<br>
+		<button type="submit" class="btn btn-primary">Submit</button>
+		
+	</form>
+	
+	
+<%- include('../_layouts/admin_footer') %>

@@ -1,0 +1,39 @@
+<%- include('../_layouts/admin_header'); %>
+	
+	<h2 class="page-title"><%=title%></h2>
+	<h5><%=page%> / <%=subpage%> / <%=tableName%></h5>
+	
+	
+	
+	<a href="/admin/tables" class="btn btn-primary">Back to tables</a>
+	<br><br>
+	
+	
+	<form method="post" enctype="multipart/form-data" action="/admin/tables/add-doc/<%= tableid %>">
+	
+		<table class="form-group table table-dark table-hover">
+		<tbody>
+			<% for(var i=0;i<fieldNames.length;i++){%>
+			<tr>
+			<% if(fieldNames[i]!="_id" && fieldNames[i]!="__v") {%>
+				<label class="form-label"><%=fieldNames[i]%></label>
+				<% if(fieldTypes[i]==="File"){ %>
+					<div class= "file py-1">
+						<input type="<%=fieldTypes[i]%>" class="form-control1" name="file"/>
+					</div>
+				<% } else { %>
+				<input type="<%=fieldTypes[i]%>" class="form-control" name="value"  />
+				<% } %>
+			<%}%>
+			</tr>
+			<% } %>
+		</tbody>
+		</table>
+		
+		<br>
+		<button type="submit" class="btn btn-primary">Submit</button>
+		
+	</form>
+	
+	
+<%- include('../_layouts/admin_footer') %>

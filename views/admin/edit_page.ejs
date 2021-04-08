@@ -11,13 +11,16 @@
 			<input type="text" class="form-control" name="title" value="<%= title%>" placeholder="Title">
 			
 		</div>
-	
+		
 		<div class="form-group">
 			<label class="form-label">Slug</label>
+			<% if(slug=="home"){ %>
+			<input type="text" class="form-control" name="slug" value="<%= slug%>" placeholder="Slug" disabled>
+			<%}else{%>
 			<input type="text" class="form-control" name="slug" value="<%= slug%>" placeholder="Slug">
-			
+			<%}%>
 		</div>
-	
+		
 		<div class="form-group">
 			<label class="form-label">Content</label>
 			<textarea id="ta" name="content" class="form-control" col="30" row="10"><%= content%></textarea>

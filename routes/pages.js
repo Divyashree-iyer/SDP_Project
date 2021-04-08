@@ -36,26 +36,17 @@ var FileTable=require("../models/table_type_file");
 //GET request from /
 router.get("/",function(req,res){
 	
-
-	Page.findOne({slug:"home"},function(err, page){
+	 Page.findOne({slug:"home"},function(err, page){
 		if(err){
 			console.log("error while getting page");
+			req.flash("danger","Home Page deleted from database");
+			res.redirect("/user/login");
 		}
 		
 		else{
-		res.render('index',{
-			title:page.title,
-			content:page.content,
-			slug:page.slug,
-			subpages:[],
-			doc_title:"",
-			tablename:"",
-			img:"",
-			tImg:"",
-			tableid:"",
-		});
+		res.redirect("/home");
 		}
-	})
+	}) 
 
 });
 
@@ -152,15 +143,20 @@ router.get("/:slug/:subpage",function(req,res){
 						FileTable.find({table_id:tableid},function(err,files){
 							
 							files.forEach(function(file){
-								docval.forEach(function(doc){
+								flag=0;
+								docid.forEach(function(doc){
 									if(file.doc_id===doc)
 									{
-										
-											imgs.push(file.value);
+										imgs.push(file.value);
 										console.log("file value : "+file.value);
+										flag=0;
+									}
+									else{
+										flag=1;
 									}
 								});
-								
+								if(flag==1)
+									imgs.push("undefined");
 							});
 							
 						res.render('index',{

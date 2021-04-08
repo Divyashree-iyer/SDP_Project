@@ -17,16 +17,6 @@ db.once("open",function(){
 });
 
 
-/* // Use connect method to connect to the Server
-client.connect(function(err) {
-  assert.equal(null, err);
-  console.log("Connected successfully to server");
-
-  const database = client.db(config.dbName);
-  
-   */
-
-
 
 
 //init app

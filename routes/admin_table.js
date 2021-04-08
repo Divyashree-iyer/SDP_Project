@@ -460,7 +460,7 @@ router.get('/edit-doc/:tableid/:doc_id',function(req,res){
 router.post("/edit-doc/:tableid/:doc_id",function(req,res){
 	
 	var values=req.body.value;
-	console.log(values);
+	
 	var l=0;
 	for(var i=0;i<values.length;i++){
 		if(values[i]!=""){
@@ -473,9 +473,10 @@ router.post("/edit-doc/:tableid/:doc_id",function(req,res){
 			fileLength=files.length
 
 		}
+
 	for(var i=0;i<fileLength;i++)
 			fileNames.push(files[i].name);
-
+	
 	var pkey;
 	Field.find({table_id:req.params.tableid},function(err, fields){
 		console.log("val="+l+" file="+fileLength + " fields: "+ fields.length);
@@ -516,27 +517,29 @@ router.post("/edit-doc/:tableid/:doc_id",function(req,res){
 						
 				}
 				if(m){
-					console.log(fields[i].name);
+					var fileInfo=files[k];
+					var fileName=fileNames[k];
 					var fname=fields[i].name;
-					if(fileNames[k]){
+					if(fileName){
 				m.findOne({doc_id:req.params.doc_id,name:fields[i].name},function(err,f){
-						
+		
 					if(!f){
 						var filevalue=new FileTable({
 							name:fname,
 							table_id:req.params.tableid,
-							value:fileNames[k],
+							value:fileName,
 							doc_id:req.params.doc_id
 						});
 						
 						filevalue.save(function(err){
 							if(err)
 								return console.log(err);
+							else console.log("saved in db");
 						});
 						var fpath="public/files/"+req.params.tableid+"/"+req.params.doc_id; //values[pkey];
 						fs.mkdirSync(fpath, { recursive: true });
 						var File=files[k];
-						var path=fpath+"/"+fileNames[k];
+						var path=fpath+"/"+fileName;
 						
 						File.mv(path,function(err){
 							if(err)
@@ -550,24 +553,28 @@ router.post("/edit-doc/:tableid/:doc_id",function(req,res){
 					else{
 					var rpath="public/files/"+req.params.tableid+"/"+req.params.doc_id+"/"+f.value;
 					var fpath="public/files/"+req.params.tableid+"/"+req.params.doc_id;
-					console.log("old file name"+f.value);
-					if(fileNames[k]!="")
+					
+					if(fileName!="")
 					{
-						f.value=fileNames[k];
+						f.value=fileName;
+						
+						f.save(function(err){
 						try {
 						  fs.removeSync(rpath);
 						} catch(err) {
 						  console.error(err)
 						}
 						
-						var File=files[k];
-						var path=fpath+"/"+fileNames[k];
+						var File=fileInfo;
+						var path=fpath+"/"+fileName;
 						
 						File.mv(path,function(err){
 							if(err)
-								console.log(err);
+								console.log("file not uploaded");
+							else 
+								console.log("file uploaded");
 						});
-						f.save(function(err){});
+						});
 					}
 					}
 					k++;
@@ -584,7 +591,7 @@ router.post("/edit-doc/:tableid/:doc_id",function(req,res){
 								console.log("error while edit doc");
 
 						});
-					break;
+					
 					}else{
 						
 			model.findOneAndUpdate({doc_id:req.params.doc_id,name:fields[i].name},{value:values[i]},null,function(err,doc){

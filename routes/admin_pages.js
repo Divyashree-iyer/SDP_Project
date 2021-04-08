@@ -161,7 +161,10 @@ router.post("/edit-page/:slug",check('title','Title must have a value.').not().i
 	
 	
 	var title=req.body.title;
-	var slug =req.body.slug.replace(/\s/g,'-').toLowerCase();
+	var slug=req.body.slug;
+	console.log(slug);
+	if(slug!=undefined)
+		slug =slug.replace(/\s/g,'-').toLowerCase();
 	var content=req.body.content;
 	if(slug=="") slug=title.replace(/\s/g,'-').toLowerCase();
 	var id=req.body.id;
@@ -196,7 +199,8 @@ router.post("/edit-page/:slug",check('title','Title must have a value.').not().i
 				if(err)
 					return console.log("error edit page find");
 				page.title=title;
-				page.slug=slug;
+				if(page.slug!="home")
+					page.slug=slug;
 				page.content=content;
 				page.save(function(err){
 					if(err)
